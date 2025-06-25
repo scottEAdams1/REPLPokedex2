@@ -152,6 +152,9 @@ func commandCatch(pointer *config, args []string) error {
 }
 
 func commandInspect(pointer *config, args []string) error {
+	if len(args) == 0 {
+		return errors.New("Provide a pokemon")
+	}
 	if pokemon, ok := pointer.caught[args[0]]; ok {
 		fmt.Printf("Name: %s\nHeight: %v\nWeight: %v\n", pokemon.Name, pokemon.Height, pokemon.Weight)
 		fmt.Println("Stats:")
@@ -165,5 +168,17 @@ func commandInspect(pointer *config, args []string) error {
 		return nil
 	}
 	fmt.Println("you have not caught that pokemon")
+	return nil
+}
+
+func commandPokedex(pointer *config, args []string) error {
+	fmt.Println("Your Pokedx:")
+	if len(pointer.caught) == 0 {
+		fmt.Println("Empty")
+		return nil
+	}
+	for k, _ := range pointer.caught {
+		fmt.Printf(" - %s\n", k)
+	}
 	return nil
 }
